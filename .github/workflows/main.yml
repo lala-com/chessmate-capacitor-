@@ -46,6 +46,22 @@ jobs:
         working-directory: android
         run: ./gradlew assembleDebug assembleRelease
 
+      - name: Create temporary debug signing key
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$HOME/.android"
+
+          keytool -genkeypair -v \
+            -keystore "$HOME/.android/debug.keystore" \
+            -storepass android \
+            -alias androiddebugkey \
+            -keypass android \
+            -keyalg RSA \
+            -keysize 2048 \
+            -validity 10000 \
+            -dname "CN=Android Debug,O=Android,C=US"
+
       - name: Sign release APK for testing
         working-directory: android
         shell: bash
@@ -57,11 +73,6 @@ jobs:
 
           if [ ! -f "$APK_UNSIGNED" ]; then
             echo "Unsigned release APK was not found."
-            exit 1
-          fi
-
-          if [ ! -f "$HOME/.android/debug.keystore" ]; then
-            echo "Android debug signing key was not generated."
             exit 1
           fi
 
