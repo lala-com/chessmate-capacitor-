@@ -1,4 +1,5 @@
-name: Build CHESSMATE Android APK
+
+name: Build CHESSMATE Android APKs
 
 on:
   workflow_dispatch:
@@ -40,12 +41,55 @@ jobs:
       - name: Sync Capacitor Android
         run: npx cap sync android
 
-      - name: Build Debug APK
+      - name: Build Debug and Release APKs
         working-directory: android
-        run: ./gradlew assembleDebug
+        run: ./gradlew assembleDebug assembleRelease
 
-      - name: Upload APK
+      - name: Sign release APK for testing
+        working-directory: android
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          APK_UNSIGNED="app/build/outputs/apk/release/app-release-unsigned.apk"
+          APK_SIGNED="app/build/outputs/apk/release/CHESSMATE-release-test.apk"
+
+          if [ ! -f "$APK_UNSIGNED" ]; then
+            echo "Unsigned release APK was not found."
+            exit 1
+          fi
+
+          if [ ! -f "$HOME/.android/debug.keystore" ]; then
+            echo "Android debug signing key was not generated."
+            exit 1
+          fi
+
+          APKSIGNER="$(find "$ANDROID_HOME/build-tools" -type f -name apksigner | sort -V | tail -n 1)"
+
+          if [ -z "$APKSIGNER" ]; then
+            echo "Android APK signer was not found."
+            exit 1
+          fi
+
+          "$APKSIGNER" sign \
+            --ks "$HOME/.android/debug.keystore" \
+            --ks-key-alias androiddebugkey \
+            --ks-pass pass:android \
+            --key-pass pass:android \
+            --out "$APK_SIGNED" \
+            "$APK_UNSIGNED"
+
+          "$APKSIGNER" verify "$APK_SIGNED"
+
+      - name: Upload Debug APK
         uses: actions/upload-artifact@v4
         with:
           name: CHESSMATE-debug-APK
           path: android/app/build/outputs/apk/debug/app-debug.apk
+
+      - name: Upload Release Test APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: CHESSMATE-release-test-APK
+          path: android/app/build/outputs/apk/release/CHESSMATE-release-test.apk
+          
