@@ -8,6 +8,7 @@ interface HomeScreenProps {
   onStartWithFriend: () => void;
   onOpenStats: () => void;
   onOpenSettings: () => void;
+  onOpenPrivacyPolicy?: () => void;
   stats: PlayerStats;
   currentScreen: 'home' | 'mode_select';
   setCurrentScreen: (screen: 'home' | 'mode_select') => void;
@@ -18,6 +19,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
   onStartWithFriend,
   onOpenStats,
   onOpenSettings,
+  onOpenPrivacyPolicy,
   stats,
   currentScreen,
   setCurrentScreen,
@@ -244,8 +246,22 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
       </main>
 
       {/* Footer Branding */}
-      <footer className="w-full border-t border-stone-900 py-3 text-center text-xs text-stone-500 z-10">
+      <footer className="w-full border-t border-stone-900 py-3.5 px-4 text-center text-xs text-stone-500 z-10 flex flex-wrap items-center justify-center gap-x-3 gap-y-1.5">
         <span>CHESSMATE &copy; {new Date().getFullYear()} &bull; Master-Grade Offline Chess</span>
+        <span className="text-stone-700 select-none">&bull;</span>
+        <a
+          href="/privacy-policy"
+          id="home-privacy-policy-link"
+          onClick={(e) => {
+            if (onOpenPrivacyPolicy) {
+              e.preventDefault();
+              onOpenPrivacyPolicy();
+            }
+          }}
+          className="text-stone-400 hover:text-amber-400 underline underline-offset-2 transition-colors cursor-pointer"
+        >
+          Privacy Policy
+        </a>
       </footer>
     </div>
   );

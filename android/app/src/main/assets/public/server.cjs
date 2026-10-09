@@ -410,6 +410,31 @@ async function startServer() {
   };
   app.get("/manifest.json", handleManifest);
   app.get("/manifest.webmanifest", handleManifest);
+  const handlePrivacyPolicy = (_req, res) => {
+    const distStatic = import_path.default.join(process.cwd(), "dist", "privacy-policy", "index.html");
+    const publicStatic = import_path.default.join(process.cwd(), "public", "privacy-policy", "index.html");
+    const distHtml = import_path.default.join(process.cwd(), "dist", "privacy-policy.html");
+    const publicHtml = import_path.default.join(process.cwd(), "public", "privacy-policy.html");
+    let target = "";
+    if (import_fs.default.existsSync(distStatic)) {
+      target = distStatic;
+    } else if (import_fs.default.existsSync(publicStatic)) {
+      target = publicStatic;
+    } else if (import_fs.default.existsSync(distHtml)) {
+      target = distHtml;
+    } else if (import_fs.default.existsSync(publicHtml)) {
+      target = publicHtml;
+    } else {
+      target = import_path.default.join(process.cwd(), "index.html");
+    }
+    res.setHeader("Content-Type", "text/html; charset=utf-8");
+    res.sendFile(target);
+  };
+  app.get("/privacy-policy", handlePrivacyPolicy);
+  app.get("/privacy-policy/", handlePrivacyPolicy);
+  app.get("/privacy-policy.html", handlePrivacyPolicy);
+  app.get("/privacy", handlePrivacyPolicy);
+  app.get("/privacy/", handlePrivacyPolicy);
   if (process.env.NODE_ENV !== "production") {
     app.use("/.well-known", import_express.default.static(import_path.default.join(process.cwd(), "public", ".well-known")));
     const vite = await (0, import_vite.createServer)({

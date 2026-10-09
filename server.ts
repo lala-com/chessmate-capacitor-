@@ -398,6 +398,36 @@ async function startServer() {
   app.get('/manifest.json', handleManifest);
   app.get('/manifest.webmanifest', handleManifest);
 
+  // Dedicated Privacy Policy endpoints to guarantee direct browser access without any redirection
+  const handlePrivacyPolicy = (_req: express.Request, res: express.Response) => {
+    const distStatic = path.join(process.cwd(), 'dist', 'privacy-policy', 'index.html');
+    const publicStatic = path.join(process.cwd(), 'public', 'privacy-policy', 'index.html');
+    const distHtml = path.join(process.cwd(), 'dist', 'privacy-policy.html');
+    const publicHtml = path.join(process.cwd(), 'public', 'privacy-policy.html');
+
+    let target = '';
+    if (fs.existsSync(distStatic)) {
+      target = distStatic;
+    } else if (fs.existsSync(publicStatic)) {
+      target = publicStatic;
+    } else if (fs.existsSync(distHtml)) {
+      target = distHtml;
+    } else if (fs.existsSync(publicHtml)) {
+      target = publicHtml;
+    } else {
+      target = path.join(process.cwd(), 'index.html');
+    }
+
+    res.setHeader('Content-Type', 'text/html; charset=utf-8');
+    res.sendFile(target);
+  };
+
+  app.get('/privacy-policy', handlePrivacyPolicy);
+  app.get('/privacy-policy/', handlePrivacyPolicy);
+  app.get('/privacy-policy.html', handlePrivacyPolicy);
+  app.get('/privacy', handlePrivacyPolicy);
+  app.get('/privacy/', handlePrivacyPolicy);
+
   // Vite middleware in dev; static file serving in prod
   if (process.env.NODE_ENV !== 'production') {
     app.use('/.well-known', express.static(path.join(process.cwd(), 'public', '.well-known')));

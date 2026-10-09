@@ -9,6 +9,7 @@ interface SettingsModalProps {
   isOpen: boolean;
   onClose: () => void;
   onUpdate: (newSettings: GameSettings) => void;
+  onOpenPrivacyPolicy?: () => void;
 }
 
 const THEME_OPTIONS: { id: BoardTheme; name: string; lightBg: string; darkBg: string }[] = [
@@ -33,6 +34,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
   isOpen,
   onClose,
   onUpdate,
+  onOpenPrivacyPolicy,
 }) => {
   if (!isOpen) return null;
 
@@ -264,10 +266,29 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
           <div>
             <PWAInstallButton variant="full" />
           </div>
+
+          {/* Privacy Policy Link in Settings */}
+          <div className="pt-3 pb-1 flex items-center justify-between text-xs text-slate-400 border-t border-slate-800/80">
+            <span>Privacy &amp; Compliance</span>
+            <a
+              href="/privacy-policy"
+              id="settings-privacy-policy-link"
+              onClick={(e) => {
+                if (onOpenPrivacyPolicy) {
+                  e.preventDefault();
+                  onClose();
+                  onOpenPrivacyPolicy();
+                }
+              }}
+              className="text-amber-400 hover:text-amber-300 font-medium underline underline-offset-2 transition-colors cursor-pointer"
+            >
+              Privacy Policy
+            </a>
+          </div>
         </div>
 
         {/* Footer */}
-        <div className="pt-6 mt-4 border-t border-slate-800 flex justify-end">
+        <div className="pt-5 mt-3 border-t border-slate-800 flex justify-end">
           <button
             type="button"
             onClick={onClose}

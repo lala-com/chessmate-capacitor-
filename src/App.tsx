@@ -47,6 +47,7 @@ import { AiStrengthMeter } from './components/AiStrengthMeter';
 import { GrandVictoryCelebration } from './components/GrandVictoryCelebration';
 import { StatisticsModal } from './components/StatisticsModal';
 import { HomeScreen } from './components/HomeScreen';
+import { PrivacyPolicy } from './components/PrivacyPolicy';
 import { PWAInstallButton } from './components/PWAInstallButton';
 import { PlayerStats, loadPlayerStats, recordGameStats } from './types/stats';
 import { getPsychologicalLine, MotivationalInsight } from './utils/motivationalLines';
@@ -112,6 +113,54 @@ export default function App() {
     }
     return DEFAULT_SETTINGS;
   });
+
+  // Public Route State (e.g. /privacy-policy)
+  const [currentPath, setCurrentPath] = useState<string>(() => {
+    if (typeof window !== 'undefined') {
+      return window.location.pathname;
+    }
+    return '/';
+  });
+
+  useEffect(() => {
+    const handlePopState = () => {
+      setCurrentPath(window.location.pathname);
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  const navigateTo = useCallback((path: string) => {
+    if (typeof window !== 'undefined') {
+      if (window.location.pathname !== path) {
+        window.history.pushState({}, '', path);
+      }
+      setCurrentPath(path);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, []);
+
+  // Comprehensive route detection for direct navigation, subpaths, trailing slashes, or hash routing
+  const isPrivacyPolicy = useMemo(() => {
+    if (typeof window === 'undefined') return false;
+    const rawPath = (currentPath || window.location.pathname || '').toLowerCase();
+    const cleanPath = rawPath.replace(/\/+$/, '');
+    const hash = (window.location.hash || '').toLowerCase();
+    const search = (window.location.search || '').toLowerCase();
+
+    return (
+      cleanPath === '/privacy-policy' ||
+      cleanPath.endsWith('/privacy-policy') ||
+      cleanPath === '/privacy-policy.html' ||
+      cleanPath.endsWith('/privacy-policy.html') ||
+      cleanPath === '/privacy' ||
+      cleanPath.endsWith('/privacy') ||
+      hash.includes('privacy-policy') ||
+      hash.includes('privacy') ||
+      search.includes('privacy-policy') ||
+      search.includes('privacy')
+    );
+  }, [currentPath]);
 
   // Top-level Application Screen State: 'home' | 'mode_select' | 'game'
   // When starting or when web renderer is recreated with an unfinished game, restore 'game' screen immediately!
@@ -1192,6 +1241,11 @@ export default function App() {
     [position, moveHistory, settings.aiStrength, userColor, getLiveGameContext]
   );
 
+  // Public standalone route: /privacy-policy
+  if (isPrivacyPolicy) {
+    return <PrivacyPolicy onBack={() => navigateTo('/')} />;
+  }
+
   return (
     <div className="min-h-screen bg-stone-950 text-stone-100 flex flex-col font-sans selection:bg-amber-500/30">
       {/* If currentScreen is 'home' or 'mode_select', render the CHESSMATE Homepage */}
@@ -1207,6 +1261,7 @@ export default function App() {
           }}
           onOpenStats={() => setIsStatsOpen(true)}
           onOpenSettings={() => setIsSettingsOpen(true)}
+          onOpenPrivacyPolicy={() => navigateTo('/privacy-policy')}
           stats={stats}
           currentScreen={currentScreen}
           setCurrentScreen={setCurrentScreen}
@@ -1591,7 +1646,21 @@ export default function App() {
               <Trophy className="w-3.5 h-3.5 text-amber-400" />
               <span>🏆 Best: {stats.bestVictoryAi !== null ? `${stats.bestVictoryAi}% AI` : 'None'}</span>
             </button>
-            <span className="font-mono text-stone-400">{position.fullmoveNumber} turns</span>
+            <div className="flex items-center gap-2.5">
+              <a
+                href="/privacy-policy"
+                id="ingame-privacy-policy-link"
+                onClick={(e) => {
+                  e.preventDefault();
+                  navigateTo('/privacy-policy');
+                }}
+                className="text-stone-500 hover:text-amber-400 underline underline-offset-2 transition-colors cursor-pointer"
+              >
+                Privacy Policy
+              </a>
+              <span className="text-stone-700 select-none">&bull;</span>
+              <span className="font-mono text-stone-400">{position.fullmoveNumber} turns</span>
+            </div>
           </div>
         </div>
       </main>
@@ -1611,6 +1680,7 @@ export default function App() {
         settings={settings}
         isOpen={isSettingsOpen}
         onClose={() => setIsSettingsOpen(false)}
+        onOpenPrivacyPolicy={() => navigateTo('/privacy-policy')}
         onUpdate={newSettings => {
           const tcChanged = newSettings.timeControl !== settings.timeControl;
           const modeChanged = newSettings.gameMode !== settings.gameMode;

@@ -1,0 +1,619 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CHESSMATE AI Privacy Policy</title>
+    <meta name="description" content="CHESSMATE AI Privacy Policy – Complete information regarding data handling, offline chess play, device storage, and transparent AI companion interactions." />
+    <meta name="theme-color" content="#0c0a09" />
+    <meta property="og:title" content="CHESSMATE AI Privacy Policy" />
+    <meta property="og:description" content="CHESSMATE AI Privacy Policy – Complete information regarding data handling, offline chess play, device storage, and transparent AI companion interactions." />
+    <meta property="og:type" content="website" />
+    <link rel="icon" type="image/svg+xml" href="/icon.svg" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/pwa-192x192.png" />
+    <style>
+      :root {
+        color-scheme: dark;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        background-color: #0c0a09;
+        color: #d6d3d1;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        line-height: 1.6;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+      a {
+        color: #f59e0b;
+        text-decoration: none;
+      }
+      a:hover {
+        color: #fbbf24;
+        text-decoration: underline;
+      }
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        background: rgba(28, 25, 23, 0.92);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border-bottom: 1px solid #292524;
+        padding: 14px 20px;
+      }
+      .header-content {
+        max-width: 1024px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .brand-group {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .back-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 16px;
+        background-color: #292524;
+        border: 1px solid #44403c;
+        border-radius: 12px;
+        color: #f5f5f4;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.15s ease;
+      }
+      .back-btn:hover {
+        background-color: #44403c;
+        color: #ffffff;
+        text-decoration: none;
+      }
+      .brand-title {
+        font-family: Georgia, serif;
+        font-weight: 900;
+        color: #f59e0b;
+        letter-spacing: 0.05em;
+        font-size: 15px;
+      }
+      .brand-sub {
+        font-size: 12px;
+        color: #a8a29e;
+      }
+      main {
+        flex: 1;
+        max-width: 1024px;
+        width: 100%;
+        margin: 0 auto;
+        padding: 36px 20px 60px;
+      }
+      .hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 4px 12px;
+        background: rgba(245, 158, 11, 0.1);
+        border: 1px solid rgba(245, 158, 11, 0.25);
+        border-radius: 9999px;
+        color: #f59e0b;
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        margin-bottom: 16px;
+      }
+      h1 {
+        font-family: Georgia, serif;
+        font-size: clamp(28px, 4vw, 42px);
+        font-weight: 900;
+        color: #f5f5f4;
+        letter-spacing: -0.02em;
+        margin-bottom: 12px;
+        line-height: 1.2;
+      }
+      .hero-desc {
+        color: #a8a29e;
+        font-size: 15px;
+        max-width: 700px;
+        margin-bottom: 36px;
+      }
+      .cards-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 16px;
+        margin-bottom: 40px;
+      }
+      .summary-card {
+        background: rgba(28, 25, 23, 0.85);
+        border: 1px solid #292524;
+        border-radius: 16px;
+        padding: 18px;
+      }
+      .card-icon {
+        width: 34px;
+        height: 34px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        margin-bottom: 12px;
+      }
+      .icon-emerald { background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.3); color: #34d399; }
+      .icon-amber { background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.3); color: #fbbf24; }
+      .icon-blue { background: rgba(59, 130, 246, 0.15); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; }
+      .icon-purple { background: rgba(168, 85, 247, 0.15); border: 1px solid rgba(168, 85, 247, 0.3); color: #c084fc; }
+      .card-title {
+        color: #e7e5e4;
+        font-size: 14px;
+        font-weight: 700;
+        margin-bottom: 4px;
+      }
+      .card-text {
+        color: #a8a29e;
+        font-size: 12px;
+        line-height: 1.5;
+      }
+      .layout-grid {
+        display: grid;
+        grid-template-columns: 280px 1fr;
+        gap: 36px;
+        align-items: start;
+      }
+      @media (max-width: 860px) {
+        .layout-grid {
+          grid-template-columns: 1fr;
+        }
+        .toc-aside {
+          display: none;
+        }
+      }
+      .toc-aside {
+        position: sticky;
+        top: 86px;
+        background: rgba(28, 25, 23, 0.6);
+        border: 1px solid #292524;
+        border-radius: 16px;
+        padding: 18px;
+        max-height: calc(100vh - 110px);
+        overflow-y: auto;
+      }
+      .toc-title {
+        font-size: 11px;
+        font-family: monospace;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: #f59e0b;
+        font-weight: 700;
+        margin-bottom: 12px;
+        display: block;
+      }
+      .toc-links {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+      .toc-link {
+        font-size: 12px;
+        color: #a8a29e;
+        padding: 6px 8px;
+        border-radius: 8px;
+        transition: all 0.15s;
+        text-decoration: none;
+        display: flex;
+        gap: 8px;
+        align-items: baseline;
+      }
+      .toc-link:hover {
+        background: #292524;
+        color: #ffffff;
+        text-decoration: none;
+      }
+      .toc-num {
+        color: rgba(245, 158, 11, 0.7);
+        font-family: monospace;
+        font-size: 11px;
+        min-width: 18px;
+      }
+      .content-sections {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+      }
+      .section-card {
+        background: rgba(28, 25, 23, 0.45);
+        border: 1px solid #292524;
+        border-radius: 18px;
+        padding: 24px;
+        scroll-margin-top: 90px;
+      }
+      .section-heading {
+        font-family: Georgia, serif;
+        font-size: 20px;
+        font-weight: 700;
+        color: #f5f5f4;
+        margin-bottom: 14px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .section-num {
+        color: #f59e0b;
+        font-family: monospace;
+        font-size: 16px;
+      }
+      .section-card p {
+        color: #d6d3d1;
+        font-size: 14px;
+        margin-bottom: 12px;
+      }
+      .section-card p:last-child {
+        margin-bottom: 0;
+      }
+      .section-card ul {
+        list-style: disc;
+        padding-left: 20px;
+        color: #d6d3d1;
+        font-size: 14px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin-bottom: 12px;
+      }
+      .section-card code {
+        background: #1c1917;
+        border: 1px solid #44403c;
+        padding: 2px 6px;
+        border-radius: 6px;
+        font-family: monospace;
+        font-size: 12px;
+        color: #fbbf24;
+      }
+      .contact-box {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        background: #0c0a09;
+        border: 1px solid #292524;
+        border-radius: 12px;
+        padding: 16px;
+        margin-top: 14px;
+      }
+      .contact-icon {
+        width: 38px;
+        height: 38px;
+        border-radius: 10px;
+        background: rgba(245, 158, 11, 0.15);
+        border: 1px solid rgba(245, 158, 11, 0.3);
+        color: #f59e0b;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        flex-shrink: 0;
+      }
+      footer {
+        border-top: 1px solid #1c1917;
+        padding: 24px 20px;
+        text-align: center;
+        font-size: 12px;
+        color: #78716c;
+      }
+      .footer-actions {
+        max-width: 1024px;
+        margin: 0 auto;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding-bottom: 16px;
+        margin-bottom: 16px;
+        border-bottom: 1px solid #292524;
+      }
+      .primary-return-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 20px;
+        background-color: #f59e0b;
+        border: none;
+        border-radius: 12px;
+        color: #0c0a09;
+        font-size: 14px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: background 0.15s;
+        text-decoration: none;
+      }
+      .primary-return-btn:hover {
+        background-color: #fbbf24;
+        color: #0c0a09;
+        text-decoration: none;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Top Header -->
+    <header>
+      <div class="header-content">
+        <div class="brand-group">
+          <a href="/" class="back-btn" id="header-back-link" title="Return to CHESSMATE">
+            <span>&larr;</span>
+            <span>Back to Game</span>
+          </a>
+          <span class="brand-title">CHESSMATE</span>
+          <span class="brand-sub">&bull; Privacy Policy</span>
+        </div>
+        <a href="/" style="font-size: 13px; color: #a8a29e;">Home</a>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+      <div class="hero-badge">
+        <span>&#128737;</span>
+        <span>Legal &amp; Privacy Documentation</span>
+      </div>
+      <h1>CHESSMATE AI Privacy Policy</h1>
+      <p class="hero-desc">
+        Effective Date &amp; Last Updated: October 2026. This Privacy Policy details how CHESSMATE AI handles data, local storage, offline functionality, and AI companion requests.
+      </p>
+
+      <!-- Key Summary Highlights -->
+      <div class="cards-grid">
+        <div class="summary-card">
+          <div class="card-icon icon-emerald">&#128584;</div>
+          <div class="card-title">No Account Required</div>
+          <div class="card-text">No signup, email, password, or login credentials needed to play.</div>
+        </div>
+        <div class="summary-card">
+          <div class="card-icon icon-amber">&#128190;</div>
+          <div class="card-title">Offline Chess Engine</div>
+          <div class="card-text">Gameplay and match logic run entirely on your device without network calls.</div>
+        </div>
+        <div class="summary-card">
+          <div class="card-icon icon-blue">&#128246;</div>
+          <div class="card-title">AI Companion Opt-In</div>
+          <div class="card-text">Only companion chat queries contact the cloud AI service when active.</div>
+        </div>
+        <div class="summary-card">
+          <div class="card-icon icon-purple">&#128274;</div>
+          <div class="card-title">Zero Commercial Ads</div>
+          <div class="card-text">We do not sell data, run ad networks, or implement user tracking beacons.</div>
+        </div>
+      </div>
+
+      <!-- Main Layout -->
+      <div class="layout-grid">
+        <!-- Table of Contents -->
+        <aside class="toc-aside">
+          <span class="toc-title">Table of Contents</span>
+          <nav class="toc-links">
+            <a href="#introduction" class="toc-link"><span class="toc-num">1.</span><span>Introduction</span></a>
+            <a href="#information-we-collect" class="toc-link"><span class="toc-num">2.</span><span>Information We Collect</span></a>
+            <a href="#chess-gameplay-data" class="toc-link"><span class="toc-num">3.</span><span>Chess Gameplay Data</span></a>
+            <a href="#chessmate-ai-companion" class="toc-link"><span class="toc-num">4.</span><span>CHESSMATE AI Companion</span></a>
+            <a href="#internet-connectivity" class="toc-link"><span class="toc-num">5.</span><span>Internet Connectivity</span></a>
+            <a href="#local-storage" class="toc-link"><span class="toc-num">6.</span><span>Local Storage</span></a>
+            <a href="#device-information" class="toc-link"><span class="toc-num">7.</span><span>Device Information</span></a>
+            <a href="#how-we-use-information" class="toc-link"><span class="toc-num">8.</span><span>How We Use Information</span></a>
+            <a href="#data-sharing" class="toc-link"><span class="toc-num">9.</span><span>Data Sharing</span></a>
+            <a href="#data-security" class="toc-link"><span class="toc-num">10.</span><span>Data Security</span></a>
+            <a href="#childrens-privacy" class="toc-link"><span class="toc-num">11.</span><span>Children's Privacy</span></a>
+            <a href="#third-party-services" class="toc-link"><span class="toc-num">12.</span><span>Third-Party Services</span></a>
+            <a href="#data-retention" class="toc-link"><span class="toc-num">13.</span><span>Data Retention</span></a>
+            <a href="#user-choices" class="toc-link"><span class="toc-num">14.</span><span>User Choices</span></a>
+            <a href="#changes-to-policy" class="toc-link"><span class="toc-num">15.</span><span>Changes to Policy</span></a>
+            <a href="#contact-us" class="toc-link"><span class="toc-num">16.</span><span>Contact Us</span></a>
+          </nav>
+        </aside>
+
+        <!-- All 16 Complete Policy Sections -->
+        <div class="content-sections">
+          <section id="introduction" class="section-card">
+            <h2 class="section-heading"><span class="section-num">1.</span> Introduction</h2>
+            <p>
+              Welcome to <strong>CHESSMATE AI</strong> ("CHESSMATE," "we," "us," or "our"). We provide a master-grade chess gaming application featuring an interactive chess board, local two-player play, customizable engine difficulty, match statistics, and an optional in-game AI chess companion ("CHESSMATE Companion").
+            </p>
+            <p>
+              We believe in straightforward, privacy-respecting software. This Privacy Policy is designed to clearly and transparently inform you about how data is treated when you access or use CHESSMATE AI on the web or as an installed progressive web application.
+            </p>
+          </section>
+
+          <section id="information-we-collect" class="section-card">
+            <h2 class="section-heading"><span class="section-num">2.</span> Information We Collect</h2>
+            <p>CHESSMATE AI is architected from the ground up to minimize data collection:</p>
+            <ul>
+              <li><strong>No Account or Identity Data:</strong> You are not required to create an account, register, or provide your name, email address, physical address, or phone number.</li>
+              <li><strong>No Sensitive Hardware Access:</strong> CHESSMATE AI does not request or access your device microphone, camera, contacts, photo library, file system, or precise GPS location.</li>
+              <li><strong>No Financial Information:</strong> CHESSMATE AI does not process payments, collect credit card details, or connect to billing systems.</li>
+            </ul>
+          </section>
+
+          <section id="chess-gameplay-data" class="section-card">
+            <h2 class="section-heading"><span class="section-num">3.</span> Chess Gameplay Data</h2>
+            <p>
+              Gameplay information—such as piece placements, legal move histories, captured pieces, turn timers, and game outcomes (e.g., checkmate, stalemate, resignations)—is calculated and handled locally within your client application.
+            </p>
+            <p>
+              The chess engine (evaluating legal moves, CAISSA AI opponent calculations, and board positions) operates entirely client-side on your device. We do not stream or upload your private match history to any remote database.
+            </p>
+          </section>
+
+          <section id="chessmate-ai-companion" class="section-card">
+            <h2 class="section-heading"><span class="section-num">4.</span> CHESSMATE AI Companion and AI Requests</h2>
+            <p>
+              CHESSMATE AI includes an interactive companion feature that players can consult for chess strategy, advice, tactics, rules, and game commentary.
+            </p>
+            <p>When you submit a query to the CHESSMATE AI companion:</p>
+            <ul>
+              <li>The text of your question, along with the current board state context (FEN representation, piece balance, and recent moves), is transmitted to our backend proxy service.</li>
+              <li>Our backend proxies the prompt to a language model service (Google Gemini API) to generate the chess-focused response.</li>
+              <li>These requests are strictly limited to chess analysis and gameplay assistance. We do not attach personal user identifiers to these API calls.</li>
+              <li>Data transmitted during AI interactions is processed in accordance with the third-party AI provider's privacy and API terms. Users should refrain from entering personal, sensitive, or confidential information in chess companion chat messages.</li>
+            </ul>
+          </section>
+
+          <section id="internet-connectivity" class="section-card">
+            <h2 class="section-heading"><span class="section-num">5.</span> Internet Connectivity</h2>
+            <p>
+              <strong>Core Game is Offline-Capable:</strong> You can play full chess matches against the computer or pass-and-play with another person on the same device without an active internet connection.
+            </p>
+            <p>
+              <strong>Online Requirement for AI Companion:</strong> Querying the cloud-based CHESSMATE AI companion requires an active network connection. If no internet connection is available, the companion gracefully falls back to local pre-compiled responses or informs you that network access is needed.
+            </p>
+          </section>
+
+          <section id="local-storage" class="section-card">
+            <h2 class="section-heading"><span class="section-num">6.</span> Local Storage and Saved Game Data</h2>
+            <p>
+              CHESSMATE AI utilizes your browser's client-side storage (such as Web Storage / <code>localStorage</code>) strictly to preserve your in-game experience between visits:
+            </p>
+            <ul>
+              <li><strong>Unfinished Match Restoration:</strong> Current board state, active move history, and timers are saved so you can resume your game if you refresh or reopen the app.</li>
+              <li><strong>Player Preferences:</strong> Your selected board theme (e.g., Classic Wood, Emerald, Slate), sound effects toggle, legal move dots, and preferred time controls.</li>
+              <li><strong>Local Player Statistics:</strong> Total games played, win/loss/draw counts, and win streaks stored strictly on your local device.</li>
+            </ul>
+            <p style="font-size: 12px; color: #a8a29e; margin-top: 8px;">
+              This data stays on your local device and is never uploaded to an external server or synced to third-party databases.
+            </p>
+          </section>
+
+          <section id="device-information" class="section-card">
+            <h2 class="section-heading"><span class="section-num">7.</span> Device Information</h2>
+            <p>
+              When accessing CHESSMATE AI via the web, standard HTTP/HTTPS transmission headers (such as IP address, browser user-agent, and requested asset paths) may be processed transiently by the hosting web server solely to deliver web assets and maintain network reliability. We do not combine server connection logs with individual player identities or chess games.
+            </p>
+          </section>
+
+          <section id="how-we-use-information" class="section-card">
+            <h2 class="section-heading"><span class="section-num">8.</span> How We Use Information</h2>
+            <p>Any information processed by CHESSMATE AI is used solely to:</p>
+            <ul>
+              <li>Render the interactive chess board, validate moves, and execute game rules.</li>
+              <li>Restore your saved game and preferences across sessions on your device.</li>
+              <li>Process chess queries submitted by you to the CHESSMATE AI companion.</li>
+              <li>Maintain basic technical stability, security, and uptime of the web application.</li>
+            </ul>
+            <p style="margin-top: 8px;">
+              We do not sell, rent, monetize, or use your data for advertising, behavioural profiling, or cross-site tracking.
+            </p>
+          </section>
+
+          <section id="data-sharing" class="section-card">
+            <h2 class="section-heading"><span class="section-num">9.</span> Data Sharing</h2>
+            <p>We do not sell or trade your data. Data is only shared in the following narrow circumstances:</p>
+            <ul>
+              <li><strong>AI Service Processing:</strong> When you initiate a chat with the AI companion, the chess prompt and board state are transmitted to our AI infrastructure provider (Google Gemini API) to generate the assistant response.</li>
+              <li><strong>Hosting &amp; Infrastructure:</strong> Our cloud hosting environment processes standard web traffic requests to serve the web application files.</li>
+              <li><strong>Legal Requirements:</strong> If required by law, subpoena, or valid court order, we may disclose information strictly necessary to comply with applicable legal obligations.</li>
+            </ul>
+          </section>
+
+          <section id="data-security" class="section-card">
+            <h2 class="section-heading"><span class="section-num">10.</span> Data Security</h2>
+            <p>
+              We implement industry-standard security measures, including HTTPS encryption in transit for all communications between your browser, our application server, and upstream AI endpoints. While no electronic transmission over the internet or method of storage can be guaranteed to be 100% impenetrable, our architectural choice to avoid holding accounts or sensitive personal records substantially limits exposure risk.
+            </p>
+          </section>
+
+          <section id="childrens-privacy" class="section-card">
+            <h2 class="section-heading"><span class="section-num">11.</span> Children's Privacy</h2>
+            <p>
+              CHESSMATE AI is a general-audience educational and recreational chess application. We do not knowingly collect, solicit, or maintain personal information from children under the age of 13 (or under applicable age limits in your jurisdiction). Because the app does not require registration or personal data submission, child privacy is inherently protected during normal gameplay.
+            </p>
+          </section>
+
+          <section id="third-party-services" class="section-card">
+            <h2 class="section-heading"><span class="section-num">12.</span> Third-Party Services</h2>
+            <p>CHESSMATE AI integrates with select third-party service providers for technical operation:</p>
+            <ul>
+              <li><strong>Google Gemini API:</strong> Utilized server-side to provide responses for the CHESSMATE companion feature. Consult Google's Privacy Policy and API terms for information on their data handling standards.</li>
+              <li><strong>Application Hosting:</strong> The app is hosted on cloud container infrastructure to serve web assets.</li>
+            </ul>
+            <p style="margin-top: 8px;">
+              We do not include third-party advertising SDKs, social media tracking pixels, or third-party analytic monitoring tools in CHESSMATE AI.
+            </p>
+          </section>
+
+          <section id="data-retention" class="section-card">
+            <h2 class="section-heading"><span class="section-num">13.</span> Data Retention</h2>
+            <p>
+              Because we do not maintain user accounts or centralized gameplay databases, we do not retain your game moves, match outcomes, or personal histories on our servers. Local storage records remain on your personal device until you reset your browser data, clear application storage, or click the in-app "Reset Stats" button in the Statistics modal.
+            </p>
+          </section>
+
+          <section id="user-choices" class="section-card">
+            <h2 class="section-heading"><span class="section-num">14.</span> User Choices</h2>
+            <p>You maintain complete control over your application usage:</p>
+            <ul>
+              <li><strong>Playing Offline:</strong> You may use the app offline or disable network connectivity; core chess matches continue uninterrupted.</li>
+              <li><strong>AI Companion Usage:</strong> The CHESSMATE companion is optional. If you do not open or interact with the companion chat, no AI prompts are dispatched.</li>
+              <li><strong>Clearing Stored Data:</strong> You can clear your local game state, audio settings, and stats at any time by clearing your browser's site data or local storage for this domain.</li>
+            </ul>
+          </section>
+
+          <section id="changes-to-policy" class="section-card">
+            <h2 class="section-heading"><span class="section-num">15.</span> Changes to This Privacy Policy</h2>
+            <p>
+              We may periodically update this Privacy Policy to reflect modifications in application features, legal standards, or operational practices. When updates are published, the revised policy will be posted on this page with an updated "Last Updated" date. We recommend checking this page periodically to remain informed.
+            </p>
+          </section>
+
+          <section id="contact-us" class="section-card">
+            <h2 class="section-heading"><span class="section-num">16.</span> Contact Us</h2>
+            <p>
+              If you have questions, inquiries, or feedback regarding this Privacy Policy or data privacy in CHESSMATE AI, you can reach out via:
+            </p>
+            <div class="contact-box">
+              <div class="contact-icon">&#9993;</div>
+              <div>
+                <div style="font-size: 12px; color: #a8a29e;">Support &amp; Inquiries</div>
+                <div style="font-size: 14px; font-weight: 600; color: #f5f5f4;">privacy@chessmate-ai.app</div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+
+      <!-- Bottom Navigation Footer -->
+      <div style="margin-top: 48px; padding-top: 32px; border-top: 1px solid #292524;">
+        <div class="footer-actions">
+          <a href="/" class="primary-return-btn">
+            <span>&larr;</span>
+            <span>Return to CHESSMATE</span>
+          </a>
+          <span style="font-size: 12px; color: #78716c;">
+            CHESSMATE &copy; 2026 &bull; Master-Grade Offline Chess &bull; All Rights Reserved
+          </span>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <span>CHESSMATE &copy; 2026 &bull; Master-Grade Offline Chess</span>
+    </footer>
+
+    <script>
+      // Support smooth back-button navigation if user navigated from the app
+      document.querySelectorAll('#header-back-link, .primary-return-btn').forEach(function(el) {
+        el.addEventListener('click', function(e) {
+          if (window.history.length > 1 && document.referrer && document.referrer.indexOf(window.location.host) !== -1) {
+            e.preventDefault();
+            window.history.back();
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
