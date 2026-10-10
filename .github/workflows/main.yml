@@ -46,48 +46,37 @@ jobs:
         working-directory: android
         run: ./gradlew assembleDebug assembleRelease
 
-      - name: Create temporary debug signing key
-        shell: bash
-        run: |
-          set -euo pipefail
-          mkdir -p "$HOME/.android"
-
-          keytool -genkeypair -v \
-            -keystore "$HOME/.android/debug.keystore" \
-            -storepass android \
-            -alias androiddebugkey \
-            -keypass android \
-            -keyalg RSA \
-            -keysize 2048 \
-            -validity 10000 \
-            -dname "CN=Android Debug,O=Android,C=US"
-
-      - name: Sign release APK for testing
+      - name: Sign Release APK with Original Keystore
         working-directory: android
         shell: bash
+        env:
+          ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
         run: |
           set -euo pipefail
 
-          APK_UNSIGNED="app/build/outputs/apk/release/app-release-unsigned.apk"
-          APK_SIGNED="app/build/outputs/apk/release/CHESSMATE-release-test.apk"
+          KEYSTORE_PATH="$RUNNER_TEMP/chessmate-signing.keystore"
+          trap 'rm -f "$KEYSTORE_PATH"' EXIT
 
-          if [ ! -f "$APK_UNSIGNED" ]; then
-            echo "Unsigned release APK was not found."
-            exit 1
-          fi
+          echo "$ANDROID_KEYSTORE_BASE64" | base64 --decode > "$KEYSTORE_PATH"
+
+          test -s "$KEYSTORE_PATH"
+
+          APK_UNSIGNED="app/build/outputs/apk/release/app-release-unsigned.apk"
+          APK_SIGNED="app/build/outputs/apk/release/CHESSMATE-release.apk"
+
+          test -f "$APK_UNSIGNED"
 
           APKSIGNER="$(find "$ANDROID_HOME/build-tools" -type f -name apksigner | sort -V | tail -n 1)"
-
-          if [ -z "$APKSIGNER" ]; then
-            echo "Android APK signer was not found."
-            exit 1
-          fi
+          test -n "$APKSIGNER"
 
           "$APKSIGNER" sign \
-            --ks "$HOME/.android/debug.keystore" \
-            --ks-key-alias androiddebugkey \
-            --ks-pass pass:android \
-            --key-pass pass:android \
+            --ks "$KEYSTORE_PATH" \
+            --ks-key-alias "$ANDROID_KEY_ALIAS" \
+            --ks-pass env:ANDROID_KEYSTORE_PASSWORD \
+            --key-pass env:ANDROID_KEY_PASSWORD \
             --out "$APK_SIGNED" \
             "$APK_UNSIGNED"
 
@@ -99,9 +88,9 @@ jobs:
           name: CHESSMATE-debug-APK
           path: android/app/build/outputs/apk/debug/app-debug.apk
 
-      - name: Upload Release Test APK
+      - name: Upload Signed Release APK
         uses: actions/upload-artifact@v4
         with:
-          name: CHESSMATE-release-test-APK
-          path: android/app/build/outputs/apk/release/CHESSMATE-release-test.apk
+          name: CHESSMATE-release-APK
+          path: android/app/build/outputs/apk/release/CHESSMATE-release.apk
           
